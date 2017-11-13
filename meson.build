@@ -97,7 +97,7 @@ elif cc.get_id() == 'gcc' or cc.get_id() == 'clang'
     '-Werror=pointer-to-int-cast',
     '-Werror=empty-body',
     '-Werror=write-strings',
-    '-Werror=undef',
+#   '-Werror=undef', # breaks in fribidi headers
   ]
 
   if host_system == 'windows'
@@ -194,6 +194,7 @@ endif
 pango_deps = []
 
 glib_req_version = '>= 2.33.12'
+fribidi_req_version = '>= 0.19.7'
 libthai_req_version = '>= 0.1.9'
 harfbuzz_req_version = '>= 1.2.3'
 fontconfig_req_version = '>= 2.10.91'
@@ -207,6 +208,9 @@ pango_deps += mathlib_dep
 # gobject
 gobject_dep = dependency('gobject-2.0', version: glib_req_version)
 pango_deps += gobject_dep
+
+fribidi_dep = dependency('fribidi', version: fribidi_req_version)
+pango_deps += fribidi_dep
 
 thai_dep = dependency('libthai', version: libthai_req_version, required: false)
 if thai_dep.found()
